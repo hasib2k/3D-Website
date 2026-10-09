@@ -2,25 +2,20 @@
 
 import { useRef, useEffect } from "react";
 import { useThree, useFrame } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import gsap from "gsap";
 import { useGameStore, CAMERA_TARGETS } from "@/store/gameStore";
 
-/**
- * Isometric camera that:
- * - Follows the avatar during "entering" and "walking-to-room"
- * - Smoothly focuses on a specific room during "at-room"
- * - Holds steady at reception during "at-reception"
- */
-
-const ISO_OFFSET = new THREE.Vector3(18, 22, 18); // isometric offset
-const ROOM_ZOOM_OFFSET = new THREE.Vector3(10, 14, 10); // closer for room focus
+const ISO_OFFSET = new THREE.Vector3(18, 22, 18);
+const ROOM_ZOOM_OFFSET = new THREE.Vector3(10, 14, 10);
 
 export default function CameraController() {
   const { camera } = useThree();
   const targetPos = useRef(new THREE.Vector3());
   const cameraOffset = useRef(ISO_OFFSET.clone());
   const isAnimating = useRef(false);
+  const orbitRef = useRef<any>(null);
 
   const { phase, targetRoom, avatarPos } = useGameStore();
 
@@ -34,7 +29,6 @@ export default function CameraController() {
   // Respond to phase changes
   useEffect(() => {
     if (phase === "at-room" && targetRoom) {
-      // Animate camera to room focus
       const roomTarget = CAMERA_TARGETS[targetRoom];
       const newCamPos = roomTarget.clone().add(ROOM_ZOOM_OFFSET);
 
@@ -55,14 +49,12 @@ export default function CameraController() {
         },
       });
     } else if (phase === "at-reception") {
-      // Hold at reception overview
       cameraOffset.current.copy(ISO_OFFSET);
     } else if (phase === "entering" || phase === "walking-to-room") {
-      // Follow mode — use full isometric offset
       cameraOffset.current.copy(ISO_OFFSET);
       isAnimating.current = false;
     } else if (phase === "exploring") {
-      // Pull back to wide overview
+      // Animate to wide overview, then orbit controls take over
       const overviewPos = new THREE.Vector3(0, 0, 0);
       const wideOffset = new THREE.Vector3(22, 28, 22);
       const newCamPos = overviewPos.clone().add(wideOffset);
@@ -81,17 +73,21 @@ export default function CameraController() {
           isAnimating.current = false;
           targetPos.current.copy(overviewPos);
           cameraOffset.current.copy(wideOffset);
+          // Set orbit target to center
+          if (orbitRef.current) {
+            orbitRef.current.target.copy(overviewPos);
+            orbitRef.current.update();
+          }
         },
       });
     }
   }, [phase, targetRoom, camera]);
 
-  // Smooth follow each frame (only when not doing a GSAP animation)
+  // Smooth follow each frame (only when not exploring and not animating)
   useFrame(() => {
-    if (isAnimating.current) return;
+    if (isAnimating.current || phase === "exploring") return;
 
     if (phase === "entering" || phase === "walking-to-room") {
-      // Follow the avatar
       const desiredPos = avatarPos.clone().add(cameraOffset.current);
       camera.position.lerp(desiredPos, 0.04);
       targetPos.current.lerp(avatarPos, 0.04);
@@ -105,5 +101,21 @@ export default function CameraController() {
     }
   });
 
-  return null;
+  // Only enable orbit controls during exploring phase
+  return (
+    <OrbitControls
+      ref={orbitRef}
+      enabled={phase === "exploring" && !isAnimating.current}
+      enablePan={false}
+      enableZoom={true}
+      enableRotate={true}
+      minDistance={15}
+      maxDistance={55}
+      minPolarAngle={Math.PI * 0.15}
+      maxPolarAngle={Math.PI * 0.45}
+      rotateSpeed={0.5}
+      zoomSpeed={0.6}
+      target={[0, 0, 0]}
+    />
+  );
 }

@@ -6,6 +6,7 @@ import Office from "./Office";
 import Character from "./Character";
 import CameraController from "./CameraController";
 import WaypointNavigator from "./WaypointNavigator";
+import RoomLabels from "./RoomLabels";
 
 export default function SceneCanvas() {
   const { avatarPos, receptionistPos, phase } = useGameStore();
@@ -41,7 +42,7 @@ export default function SceneCanvas() {
       <hemisphereLight args={["#87CEEB", "#E2E8F0", 0.4]} />
 
       {/* Fog for depth */}
-      <fog attach="fog" args={["#f0f4f8", 40, 80]} />
+      <fog attach="fog" args={["#e8edf2", 40, 80]} />
 
       {/* Office environment */}
       <Office />
@@ -61,6 +62,9 @@ export default function SceneCanvas() {
         labelColor="#DD6B20"
         isWalking={phase === "walking-to-room"}
       />
+
+      {/* Room labels (visible during exploring) */}
+      <RoomLabels />
 
       {/* Logic components */}
       <CameraController />
