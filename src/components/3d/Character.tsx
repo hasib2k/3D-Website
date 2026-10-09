@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
@@ -26,6 +26,13 @@ export default function Character({
   const rightLegRef = useRef<THREE.Mesh>(null);
   const leftArmRef = useRef<THREE.Mesh>(null);
   const rightArmRef = useRef<THREE.Mesh>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // Delay Html portal creation to avoid race condition with React 19
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   useFrame((state) => {
     if (!groupRef.current) return;
@@ -114,8 +121,8 @@ export default function Character({
         <meshStandardMaterial color="#2D3748" />
       </mesh>
 
-      {/* Floating label */}
-      <Html position={[0, 2.3, 0]} center distanceFactor={20} zIndexRange={[100, 0]}>
+      {/* Floating label — deferred to avoid React 19 portal race */}
+      {mounted && <Html position={[0, 2.3, 0]} center distanceFactor={20} zIndexRange={[100, 0]}>
         <div
           className="pointer-events-none select-none"
           style={{
@@ -153,7 +160,7 @@ export default function Character({
             }}
           />
         </div>
-      </Html>
+      </Html>}
     </group>
   );
 }

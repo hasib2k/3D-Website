@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Html } from "@react-three/drei";
 import { useGameStore, WAYPOINTS, type RoomId } from "@/store/gameStore";
 
@@ -69,9 +70,15 @@ const ROOMS: {
 
 export default function RoomLabels() {
   const { phase, setPhase, setTargetRoom, setDialogOpen } = useGameStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   // Only show during exploring phase
-  if (phase !== "exploring") return null;
+  if (phase !== "exploring" || !mounted) return null;
 
   const handleClick = (id: RoomId) => {
     if (id === "reception") {
