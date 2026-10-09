@@ -1,6 +1,7 @@
 "use client";
 
 import { useGameStore } from "@/store/gameStore";
+import { clay } from "./clay";
 
 const PHASE_ICONS: Record<string, React.ReactNode> = {
   entering: (
@@ -31,67 +32,64 @@ const PHASE_ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-const PHASE_COLORS: Record<string, { bg: string; shadow: string }> = {
-  entering:          { bg: "linear-gradient(135deg, #6366F1, #818CF8)", shadow: "rgba(99,102,241,0.3)" },
-  "at-reception":    { bg: "linear-gradient(135deg, #F97316, #FB923C)", shadow: "rgba(249,115,22,0.3)" },
-  "walking-to-room": { bg: "linear-gradient(135deg, #3B82F6, #60A5FA)", shadow: "rgba(59,130,246,0.3)" },
-  "at-room":         { bg: "linear-gradient(135deg, #10B981, #34D399)", shadow: "rgba(16,185,129,0.3)" },
-  exploring:         { bg: "linear-gradient(135deg, #8B5CF6, #A78BFA)", shadow: "rgba(139,92,246,0.3)" },
+const PHASE_GRADIENT: Record<string, string> = {
+  entering: "linear-gradient(135deg, #6366F1, #818CF8)",
+  "at-reception": "linear-gradient(135deg, #F97316, #FB923C)",
+  "walking-to-room": "linear-gradient(135deg, #3B82F6, #60A5FA)",
+  "at-room": "linear-gradient(135deg, #10B981, #34D399)",
+  exploring: "linear-gradient(135deg, #8B5CF6, #A78BFA)",
 };
 
 export default function StatusBar() {
   const { statusText, phase } = useGameStore();
 
-  const colors = PHASE_COLORS[phase] || PHASE_COLORS.entering;
+  const gradient = PHASE_GRADIENT[phase] || PHASE_GRADIENT.entering;
   const icon = PHASE_ICONS[phase] || PHASE_ICONS.entering;
 
   return (
     <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
       <div
         style={{
+          ...clay.card,
           display: "flex",
           alignItems: "center",
           gap: 10,
-          background: "rgba(255,255,255,0.95)",
-          backdropFilter: "blur(16px)",
-          borderRadius: 14,
-          padding: "10px 18px 10px 12px",
-          boxShadow: "0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04)",
+          padding: "10px 20px 10px 12px",
+          borderRadius: 18,
         }}
       >
-        {/* Phase icon pill */}
+        {/* Icon */}
         <div
           style={{
-            width: 30,
-            height: 30,
-            borderRadius: 9,
-            background: colors.bg,
-            boxShadow: `0 3px 10px ${colors.shadow}`,
+            width: 32,
+            height: 32,
+            borderRadius: 10,
+            background: gradient,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexShrink: 0,
+            boxShadow: "inset 1px 1px 2px rgba(255,255,255,0.3), 3px 3px 6px rgba(0,0,0,0.12)",
           }}
         >
           {icon}
         </div>
 
-        {/* Status text */}
+        {/* Text */}
         <span
           style={{
             fontSize: 13,
             fontWeight: 600,
-            color: "#1F2937",
+            color: "#374151",
             whiteSpace: "nowrap",
-            letterSpacing: "0.01em",
           }}
         >
           {statusText}
         </span>
 
-        {/* Animated dots */}
+        {/* Dots */}
         {(phase === "entering" || phase === "walking-to-room") && (
-          <div style={{ display: "flex", gap: 3, marginLeft: 2 }}>
+          <div style={{ display: "flex", gap: 4, marginLeft: 2 }}>
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
@@ -99,7 +97,7 @@ export default function StatusBar() {
                   width: 5,
                   height: 5,
                   borderRadius: "50%",
-                  background: "#D1D5DB",
+                  background: "#9CA3AF",
                   animation: "dotPulse 1.2s ease-in-out infinite",
                   animationDelay: `${i * 0.2}s`,
                 }}
@@ -109,7 +107,6 @@ export default function StatusBar() {
         )}
       </div>
 
-      {/* Inline keyframes */}
       <style jsx>{`
         @keyframes dotPulse {
           0%, 100% { opacity: 0.3; transform: scale(0.8); }

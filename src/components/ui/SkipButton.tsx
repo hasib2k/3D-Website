@@ -1,6 +1,7 @@
 "use client";
 
 import { useGameStore } from "@/store/gameStore";
+import { clay } from "./clay";
 
 export default function SkipButton() {
   const { showSkip, skipToDestination } = useGameStore();
@@ -12,37 +13,38 @@ export default function SkipButton() {
       <button
         onClick={skipToDestination}
         style={{
+          ...clay.pill,
           display: "flex",
           alignItems: "center",
           gap: 8,
           fontSize: 13,
-          fontWeight: 600,
-          color: "white",
-          background: "linear-gradient(135deg, #4F46E5, #6366F1)",
-          border: "none",
-          padding: "10px 22px",
-          borderRadius: 50,
+          fontWeight: 700,
+          color: "#4F46E5",
+          padding: "12px 24px",
           cursor: "pointer",
-          boxShadow: "0 6px 24px rgba(79,70,229,0.35)",
           transition: "all 0.15s ease",
-          letterSpacing: "0.01em",
+          border: "1px solid rgba(255,255,255,0.3)",
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = "0 8px 30px rgba(79,70,229,0.45)";
-          e.currentTarget.style.transform = "translateY(-2px)";
+          Object.assign(e.currentTarget.style, clay.pillPressed);
+          e.currentTarget.style.padding = "12px 24px";
+          e.currentTarget.style.cursor = "pointer";
+          e.currentTarget.style.color = "#4338CA";
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = "0 6px 24px rgba(79,70,229,0.35)";
-          e.currentTarget.style.transform = "translateY(0)";
+          Object.assign(e.currentTarget.style, clay.pill);
+          e.currentTarget.style.padding = "12px 24px";
+          e.currentTarget.style.cursor = "pointer";
+          e.currentTarget.style.color = "#4F46E5";
         }}
         onMouseDown={(e) => {
-          e.currentTarget.style.transform = "translateY(0) scale(0.97)";
+          e.currentTarget.style.transform = "scale(0.96)";
         }}
         onMouseUp={(e) => {
-          e.currentTarget.style.transform = "translateY(-2px) scale(1)";
+          e.currentTarget.style.transform = "scale(1)";
         }}
       >
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="white">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="#4F46E5">
           <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
           <path d="M8.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L14.293 8 8.646 2.354a.5.5 0 0 1 0-.708z" />
         </svg>
