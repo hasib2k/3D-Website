@@ -56,14 +56,23 @@ body {
   animation-name: animateIn;
 }
 
-/* Custom scrollbar for content panels */
-.overflow-y-auto::-webkit-scrollbar {
-  width: 4px;
+/* Ultra-slim scrollbar */
+*::-webkit-scrollbar {
+  width: 3px;
 }
-.overflow-y-auto::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   background: transparent;
 }
-.overflow-y-auto::-webkit-scrollbar-thumb {
-  background: #cbd5e0;
-  border-radius: 2px;
+*::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
 }

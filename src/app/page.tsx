@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import StatusBar from "@/components/ui/StatusBar";
 import ReceptionDialog from "@/components/ui/ReceptionDialog";
 import SkipButton from "@/components/ui/SkipButton";
+import ExploreBackButton from "@/components/ui/ExploreBackButton";
 import RoomContent from "@/components/rooms/RoomContent";
 
 // Dynamic import the 3D canvas to avoid SSR issues with Three.js
@@ -29,6 +30,7 @@ export default function Home() {
       <StatusBar />
       <ReceptionDialog />
       <SkipButton />
+      <ExploreBackButton />
       <RoomContent />
     </main>
   );

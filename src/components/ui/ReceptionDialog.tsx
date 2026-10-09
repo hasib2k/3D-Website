@@ -2,139 +2,69 @@
 
 import { useGameStore, type RoomId } from "@/store/gameStore";
 
-// ── SVG Icon Components ────────────────────────────────────────────
-
-function BriefcaseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="7" width="20" height="14" rx="2" />
-      <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-      <path d="M2 12h20" />
-      <path d="M12 12v3" />
-    </svg>
-  );
-}
-
-function CodeIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="16 18 22 12 16 6" />
-      <polyline points="8 6 2 12 8 18" />
-      <line x1="14" y1="4" x2="10" y2="20" />
-    </svg>
-  );
-}
-
-function PenToolIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 19l7-7 3 3-7 7-3-3z" />
-      <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-      <path d="M2 2l7.586 7.586" />
-      <circle cx="11" cy="11" r="2" />
-    </svg>
-  );
-}
-
-function UsersIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  );
-}
-
-function CompassIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-    </svg>
-  );
-}
-
-function HeadphonesIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
-      <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5z" />
-      <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5z" />
-    </svg>
-  );
-}
-
-function ChevronRightIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 5l7 7-7 7" />
-    </svg>
-  );
-}
-
 // ── Options config ─────────────────────────────────────────────────
 
 const OPTIONS: {
   id: RoomId | "exploring";
   label: string;
   desc: string;
-  icon: React.FC<{ className?: string }>;
   iconBg: string;
-  iconColor: string;
-  hoverBorder: string;
-  hoverBg: string;
+  iconSvg: React.ReactNode;
 }[] = [
   {
     id: "boss-cabin",
     label: "Boss Cabin",
     desc: "Meet the CEO — About Me",
-    icon: BriefcaseIcon,
-    iconBg: "bg-indigo-50",
-    iconColor: "text-indigo-500",
-    hoverBorder: "hover:border-indigo-200",
-    hoverBg: "hover:bg-indigo-50/50",
+    iconBg: "#EEF2FF",
+    iconSvg: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="#6366F1">
+        <path d="M6 3a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V3zm2 0v1h4V3H8zM4 8v2h12V8H4z" />
+      </svg>
+    ),
   },
   {
     id: "work-studio",
     label: "Work Studio",
     desc: "See my projects & code",
-    icon: CodeIcon,
-    iconBg: "bg-sky-50",
-    iconColor: "text-sky-500",
-    hoverBorder: "hover:border-sky-200",
-    hoverBg: "hover:bg-sky-50/50",
+    iconBg: "#F0F9FF",
+    iconSvg: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="#0EA5E9">
+        <path d="M12.316 3.051a1 1 0 0 1 .633 1.265l-4 12a1 1 0 1 1-1.898-.632l4-12a1 1 0 0 1 1.265-.633zM5.707 6.293a1 1 0 0 1 0 1.414L3.414 10l2.293 2.293a1 1 0 1 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 0zm8.586 0a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 0 1 0-1.414z" />
+      </svg>
+    ),
   },
   {
     id: "design-room",
     label: "Design Room",
     desc: "UI/UX & design portfolio",
-    icon: PenToolIcon,
-    iconBg: "bg-rose-50",
-    iconColor: "text-rose-500",
-    hoverBorder: "hover:border-rose-200",
-    hoverBg: "hover:bg-rose-50/50",
+    iconBg: "#FFF1F2",
+    iconSvg: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="#F43F5E">
+        <path d="M10 2a2.5 2.5 0 0 0-2.5 2.5c0 .74.323 1.405.835 1.86L3.293 11.4a1 1 0 0 0 0 1.414l3.893 3.893a1 1 0 0 0 1.414 0l5.042-5.042A2.5 2.5 0 1 0 10 2zM4.707 12.107L10 6.814l3.186 3.186-5.293 5.293-3.186-3.186z" />
+      </svg>
+    ),
   },
   {
     id: "meeting-room",
     label: "Meeting Room",
     desc: "Get in touch — Contact",
-    icon: UsersIcon,
-    iconBg: "bg-emerald-50",
-    iconColor: "text-emerald-500",
-    hoverBorder: "hover:border-emerald-200",
-    hoverBg: "hover:bg-emerald-50/50",
+    iconBg: "#ECFDF5",
+    iconSvg: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="#10B981">
+        <path d="M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7.5-1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm12.5-1c-.17 0-.33-.02-.5-.05C14.26 12.13 15 11 15 10c0-1.54-1.06-2.84-2.5-3.22.5-.48 1.17-.78 1.92-.78C16.4 6 18 7.6 18 9.5S16.4 13 14.5 13h-1z" />
+      </svg>
+    ),
   },
   {
     id: "exploring",
     label: "Just Exploring",
-    desc: "Look around the office",
-    icon: CompassIcon,
-    iconBg: "bg-amber-50",
-    iconColor: "text-amber-500",
-    hoverBorder: "hover:border-amber-200",
-    hoverBg: "hover:bg-amber-50/50",
+    desc: "Look around the office freely",
+    iconBg: "#FFFBEB",
+    iconSvg: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="#F59E0B">
+        <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1.25-11.89l-3.54 1.77a1 1 0 0 0-.45.45l-1.77 3.54a.5.5 0 0 0 .64.64l3.54-1.77a1 1 0 0 0 .45-.45l1.77-3.54a.5.5 0 0 0-.64-.64zM10 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" clipRule="evenodd" />
+      </svg>
+    ),
   },
 ];
 
@@ -147,7 +77,6 @@ export default function ReceptionDialog() {
 
   const handleSelect = (id: RoomId | "exploring") => {
     setDialogOpen(false);
-
     if (id === "exploring") {
       setPhase("exploring");
     } else {
@@ -157,86 +86,213 @@ export default function ReceptionDialog() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ padding: 24 }}>
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/40 backdrop-blur-md" />
 
-      {/* Dialog card */}
-      <div className="relative bg-white rounded-[28px] shadow-2xl max-w-[420px] w-full mx-4 animate-in fade-in zoom-in duration-300 overflow-hidden">
-        {/* Header with gradient accent */}
-        <div className="relative px-7 pt-7 pb-5">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500" />
-
-          <div className="flex items-center gap-4">
-            {/* Receptionist avatar */}
-            <div className="relative">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
-                <HeadphonesIcon className="w-7 h-7 text-white" />
+      {/* Dialog */}
+      <div className="relative w-full animate-in" style={{ maxWidth: 400 }}>
+        <div
+          className="rounded-2xl overflow-hidden"
+          style={{
+            background: "#FFFFFF",
+            boxShadow: "0 24px 48px -12px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05)",
+          }}
+        >
+          {/* ── Header ─────────────────────────────── */}
+          <div style={{ padding: "24px 24px 20px 24px" }}>
+            <div className="flex items-center" style={{ gap: 14 }}>
+              {/* Avatar */}
+              <div className="relative" style={{ flexShrink: 0 }}>
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 14,
+                    background: "linear-gradient(135deg, #FB923C, #F97316)",
+                    boxShadow: "0 4px 12px rgba(249,115,22,0.3)",
+                  }}
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5z" />
+                    <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5z" />
+                  </svg>
+                </div>
+                {/* Online dot */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: -2,
+                    right: -2,
+                    width: 14,
+                    height: 14,
+                    borderRadius: "50%",
+                    background: "#10B981",
+                    border: "2.5px solid white",
+                  }}
+                />
               </div>
-              {/* Online dot */}
-              <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-emerald-400 rounded-full border-2 border-white" />
-            </div>
-            <div>
-              <p className="text-[11px] font-semibold text-orange-500 uppercase tracking-[0.1em]">
-                Receptionist
-              </p>
-              <p className="text-gray-900 font-bold text-xl leading-tight mt-0.5">
-                How can I help you?
-              </p>
+
+              {/* Text */}
+              <div>
+                <p
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "#F97316",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    marginBottom: 2,
+                  }}
+                >
+                  Receptionist
+                </p>
+                <p
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 800,
+                    color: "#111827",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  How can I help you?
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Divider */}
-        <div className="mx-7 h-px bg-gray-100" />
+          {/* ── Divider ────────────────────────────── */}
+          <div style={{ margin: "0 24px", height: 1, background: "#F3F4F6" }} />
 
-        {/* Options list */}
-        <div className="p-3 space-y-1">
-          {OPTIONS.map((opt) => {
-            const Icon = opt.icon;
-            return (
+          {/* ── Options ────────────────────────────── */}
+          <div style={{ padding: "12px 16px" }}>
+            {OPTIONS.map((opt, i) => (
               <button
                 key={opt.id}
                 onClick={() => handleSelect(opt.id)}
-                className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl
-                           bg-white ${opt.hoverBg}
-                           border border-transparent ${opt.hoverBorder}
-                           transition-all duration-200 group text-left
-                           hover:shadow-sm active:scale-[0.98]`}
+                className="group"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 14,
+                  width: "100%",
+                  padding: "12px 12px",
+                  borderRadius: 12,
+                  border: "1.5px solid transparent",
+                  background: "transparent",
+                  cursor: "pointer",
+                  textAlign: "left",
+                  transition: "all 0.15s ease",
+                  marginBottom: i < OPTIONS.length - 1 ? 2 : 0,
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget;
+                  el.style.background = opt.iconBg;
+                  el.style.borderColor = "#E5E7EB";
+                  el.style.boxShadow = "0 2px 8px rgba(0,0,0,0.06)";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget;
+                  el.style.background = "transparent";
+                  el.style.borderColor = "transparent";
+                  el.style.boxShadow = "none";
+                }}
+                onMouseDown={(e) => {
+                  e.currentTarget.style.transform = "scale(0.98)";
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
               >
-                {/* Icon container */}
+                {/* Icon */}
                 <div
-                  className={`w-11 h-11 rounded-xl ${opt.iconBg} flex items-center justify-center
-                             group-hover:scale-110 transition-transform duration-200 shrink-0`}
+                  className="group-hover:scale-105"
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 10,
+                    background: opt.iconBg,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    transition: "transform 0.15s ease",
+                  }}
                 >
-                  <Icon className={`w-5 h-5 ${opt.iconColor}`} />
+                  {opt.iconSvg}
                 </div>
 
                 {/* Text */}
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-800 text-[13px] leading-tight">
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 600,
+                      color: "#1F2937",
+                      lineHeight: 1.3,
+                    }}
+                  >
                     {opt.label}
                   </p>
-                  <p className="text-[11px] text-gray-400 mt-0.5 leading-tight">
+                  <p
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 400,
+                      color: "#9CA3AF",
+                      lineHeight: 1.3,
+                      marginTop: 1,
+                    }}
+                  >
                     {opt.desc}
                   </p>
                 </div>
 
                 {/* Arrow */}
-                <ChevronRightIcon
-                  className="w-4 h-4 text-gray-200 group-hover:text-gray-400
-                             group-hover:translate-x-0.5 transition-all duration-200 shrink-0"
-                />
+                <div
+                  style={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: "50%",
+                    background: "#F9FAFB",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    transition: "all 0.15s ease",
+                  }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path
+                      d="M4.5 2.5L8 6L4.5 9.5"
+                      stroke="#D1D5DB"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="group-hover:stroke-gray-500"
+                      style={{ transition: "stroke 0.15s ease" }}
+                    />
+                  </svg>
+                </div>
               </button>
-            );
-          })}
-        </div>
+            ))}
+          </div>
 
-        {/* Footer hint */}
-        <div className="px-7 pb-5 pt-2">
-          <p className="text-[10px] text-gray-300 text-center tracking-wide">
-            Select a destination to begin your tour
-          </p>
+          {/* ── Footer ─────────────────────────────── */}
+          <div style={{ padding: "8px 24px 18px 24px" }}>
+            <p
+              style={{
+                fontSize: 10,
+                fontWeight: 500,
+                color: "#D1D5DB",
+                textAlign: "center",
+                letterSpacing: "0.04em",
+              }}
+            >
+              Select a destination to begin your tour
+            </p>
+          </div>
         </div>
       </div>
     </div>

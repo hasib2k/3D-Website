@@ -115,12 +115,43 @@ export default function Character({
       </mesh>
 
       {/* Floating label */}
-      <Html position={[0, 2.2, 0]} center distanceFactor={15} zIndexRange={[100, 0]}>
+      <Html position={[0, 2.3, 0]} center distanceFactor={20} zIndexRange={[100, 0]}>
         <div
-          className="px-3 py-1 rounded-full text-white text-xs font-bold whitespace-nowrap shadow-lg pointer-events-none select-none"
-          style={{ backgroundColor: labelColor }}
+          className="pointer-events-none select-none"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 2,
+          }}
         >
-          {label}
+          {/* Tag */}
+          <div
+            style={{
+              fontSize: 9,
+              fontWeight: 700,
+              letterSpacing: "0.06em",
+              color: "white",
+              background: labelColor,
+              padding: "3px 10px",
+              borderRadius: 10,
+              whiteSpace: "nowrap",
+              boxShadow: `0 2px 8px ${labelColor}44`,
+              lineHeight: 1.2,
+            }}
+          >
+            {label}
+          </div>
+          {/* Arrow pointer */}
+          <div
+            style={{
+              width: 0,
+              height: 0,
+              borderLeft: "4px solid transparent",
+              borderRight: "4px solid transparent",
+              borderTop: `5px solid ${labelColor}`,
+            }}
+          />
         </div>
       </Html>
     </group>

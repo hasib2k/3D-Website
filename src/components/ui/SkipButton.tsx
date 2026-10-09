@@ -11,27 +11,42 @@ export default function SkipButton() {
     <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
       <button
         onClick={skipToDestination}
-        className="group flex items-center gap-2 bg-white/90 backdrop-blur-md
-                   hover:bg-white rounded-full shadow-xl px-6 py-3
-                   border border-gray-200/50 hover:border-blue-300
-                   transition-all duration-200 hover:shadow-2xl"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          fontSize: 13,
+          fontWeight: 600,
+          color: "white",
+          background: "linear-gradient(135deg, #4F46E5, #6366F1)",
+          border: "none",
+          padding: "10px 22px",
+          borderRadius: 50,
+          cursor: "pointer",
+          boxShadow: "0 6px 24px rgba(79,70,229,0.35)",
+          transition: "all 0.15s ease",
+          letterSpacing: "0.01em",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow = "0 8px 30px rgba(79,70,229,0.45)";
+          e.currentTarget.style.transform = "translateY(-2px)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow = "0 6px 24px rgba(79,70,229,0.35)";
+          e.currentTarget.style.transform = "translateY(0)";
+        }}
+        onMouseDown={(e) => {
+          e.currentTarget.style.transform = "translateY(0) scale(0.97)";
+        }}
+        onMouseUp={(e) => {
+          e.currentTarget.style.transform = "translateY(-2px) scale(1)";
+        }}
       >
-        <svg
-          className="w-4 h-4 text-gray-500 group-hover:text-blue-500 transition-colors"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M13 5l7 7-7 7M5 5l7 7-7 7"
-          />
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="white">
+          <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+          <path d="M8.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L14.293 8 8.646 2.354a.5.5 0 0 1 0-.708z" />
         </svg>
-        <span className="text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition-colors">
-          Skip Walk
-        </span>
+        Skip Walk
       </button>
     </div>
   );
